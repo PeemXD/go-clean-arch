@@ -12,6 +12,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo/v4"
 
+	"github.com/bxcodec/go-clean-arch/bmi"
 	mysqlRepo "github.com/bxcodec/go-clean-arch/internal/repository/mysql"
 
 	"github.com/bxcodec/go-clean-arch/article"
@@ -79,6 +80,9 @@ func main() {
 	// Build service Layer
 	svc := article.NewService(articleRepo, authorRepo)
 	rest.NewArticleHandler(e, svc)
+
+	bmiservice := bmi.NewService()
+	rest.NewBmiHandler(e, bmiservice)
 
 	// Start Server
 	address := os.Getenv("SERVER_ADDRESS")
